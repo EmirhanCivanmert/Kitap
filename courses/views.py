@@ -6,11 +6,11 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 
 def index(request):
     kitaplar = Kitap.objects.filter(isActive=1, isHome=1)
-    kategoriler = Category.objects.all()
+    categories = Category.objects.all()
     sliders = Slider.objects.filter(is_active=True)
 
     return render(request, 'courses/index.html', {
-        'categories' : kategoriler,
+        'categories' : categories,
         'books' : kitaplar,
         'sliders': sliders,
     })
