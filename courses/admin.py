@@ -22,6 +22,6 @@ class CategoryAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug":("name",),}
 
     def book_count(self, obj):
-        return obj.book_set.count()
+        return obj.books.count()
     
 admin.site.register(Slider)

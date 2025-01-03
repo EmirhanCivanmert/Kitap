@@ -18,7 +18,7 @@ class Kitap(models.Model):
     isActive = models.BooleanField(default=False)
     isHome = models.BooleanField(default=False)
     slug = models.SlugField(default="",blank=True, null=False,unique=True, db_index=True)
-    categories = models.ManyToManyField(Category)
+    categories = models.ManyToManyField(Category, related_name="books")
     summary = models.CharField(max_length=10000)
 
     def __str__(self):
