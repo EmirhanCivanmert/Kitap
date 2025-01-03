@@ -28,9 +28,9 @@ SECRET_KEY = 'django-insecure-9_t1tv4jy%_cijf4ih3*r@4ze%l4&igv)citxwl2=jbbh!-4w^
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    '127.0.0.1',                # Geliştirme ortamı için yerel IP
-    'localhost',                # Geliştirme ortamı için localhost
-    'kitap-l9kq.onrender.com',  # Render'daki alan adınızı ekledik
+    'kitap-l9kq.onrender.com',
+    'localhost',
+    '127.0.0.1',
 ]
 
 
