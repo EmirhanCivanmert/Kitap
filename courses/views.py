@@ -25,7 +25,7 @@ def create_book(request):
 
         if form.is_valid():
             form.save()
-            return redirect("/kitaplar/")
+            return redirect("/kitaplar")
     else:
             form = BookCreateForm()
     return render(request, "courses/create-book.html", {"form":form})
