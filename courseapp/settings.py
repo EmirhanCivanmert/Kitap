@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'account',
     'ckeditor',
     'courseapp',
+    'pdfconverter',
 ]
 
 MIDDLEWARE = [
