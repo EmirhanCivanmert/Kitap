@@ -51,7 +51,6 @@ INSTALLED_APPS = [
     'pages',
     'account',
     'ckeditor',
-    'courseapp',
     'pdfconverter',
 ]
 
