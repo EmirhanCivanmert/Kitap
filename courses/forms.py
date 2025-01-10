@@ -17,6 +17,7 @@ from courses.models import Kitap
 class BookCreateForm(forms.ModelForm):
     class Meta:
         model = Kitap
+    
         fields = ('title','description','image','slug',)
         labels = {
             'title':"Kitap Başlığı",
