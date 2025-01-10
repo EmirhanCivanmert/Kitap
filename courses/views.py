@@ -8,6 +8,7 @@ def index(request):
     kitaplar = Kitap.objects.filter(isActive=1, isHome=1)
     kategoriler = Category.objects.all()
     sliders = Slider.objects.filter(is_active=True)
+    print(kategoriler, "kategoriler")
 
     return render(request, 'courses/index.html', {
         'categories' : kategoriler,
