@@ -7,7 +7,7 @@ from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
 
 def user_login(request):
     if request.user.is_authenticated and "next" in request.GET:
-        return render(request, "account/login.html", {"error":"Yetkiniz yok."})
+        return render(request, "account/login.html", {"error":"Zaten giriş yapmışsınız."})
     
     if request.method == "POST":
         form = LoginUserForm(request, data = request.POST)
