@@ -31,10 +31,32 @@
 
                     <form action="{% url "convert_file" %}" method="POST" novalidate enctype="multipart/form-data">
                         {% csrf_token %}
-                        <label for="file">Dosya Seç :</label>
-                        <input type="file" id="file" name="file" required>
+                        <label for="file">Dosya Seç : </label>
+                        <input type="file" id="file" name="file" multiple required>
                         <button class="btn btn-primary" type="submit">Dönüştür</button>
                     </form>
+
+                    {% if success_messages %}
+                        <div style="color: green;">
+                            <h3>Başarıyla Dönüştürülen Dosyalar:</h3>
+                            <ul>
+                                {% for message in success_messages %}
+                                    <li>{{ message }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+
+                    {% if error_messages %}
+                        <div style="color: red;">
+                            <h3>Dönüştürülemeyen Dosyalar:</h3>
+                            <ul>
+                                {% for message in error_messages %}
+                                    <li>{{ message }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
             </div>
         </div>
       </div>

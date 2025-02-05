@@ -31,23 +31,37 @@ def convert_file(request):
     if request.method == "POST":
         form = UploadForm(request.POST, request.FILES)
         if form.is_valid():
-            uploaded_file = form.save()
-            input_path = uploaded_file.file.path
+            files = request.FILES.getlist('file')
             output_dir = os.path.join(settings.MEDIA_ROOT, "converted")
             os.makedirs(output_dir, exist_ok=True)
-            output_path = os.path.join(output_dir, f"{os.path.basename(uploaded_file.file.name)}.pdf")
 
-            try:
-                file_to_pdf(input_path, output_path)
-                success_message = f"Dönüştürme Başarılı:  {output_path}"
-            except Exception as e:
-                success_message = f"Dönüştürmede Hata Oluştu: {str(e)}"
+            success_messages = []
+            error_messages = []
 
-            return render(request, 'pdfconverter/convert.html', {
-                "form" : form,
-                "success" : success_message
+            for uploaded_file in files:
+                try:
+                    input_path = os.path.join(settings.MEDIA_ROOT, uploaded_file.name)
+                    output_path = os.path.join(output_dir, f"{os.path.splitext(uploaded_file.name)[0]}.pdf")
+
+                    # Dosyayı geçici olarak kaydet
+                    with open(input_path, 'wb') as f:
+                        for chunk in uploaded_file.chunks():
+                            f.write(chunk)
+
+                    # PDF'e dönüştürme işlemi
+                    file_to_pdf(input_path, output_path)
+                    
+                    success_messages.append(f"{uploaded_file.name} başarıyla dönüştürüldü.")
+
+                except Exception as e:
+                    error_messages.append(f"{uploaded_file.name} dönüştürülemedi: {str(e)}")
+
+            return render(request, "pdfconverter/convert.html", {
+                'form': form,
+                'success_messages': success_messages,
+                'error_messages': error_messages
             })
     else:
         form = UploadForm()
 
-    return render(request, 'pdfconverter/convert.html', {"form" : form})
+    return render(request, "pdfconverter/convert.html", {"form": form})
