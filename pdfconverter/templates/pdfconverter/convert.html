@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+
+{% load static %}
+
+{% block page_title %}
+    PDF Converter
+{% endblock %}
+
+{% block css_files %}
+    <link rel="stylesheet" href="{% static 'books/css/style.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="container mt-3">
+        <div class="row">
+            <div class="col-12">
+
+                <h1>PDF Dönüştürücü</h1>
+
+                    {% if success %}
+                        <div class="message success">
+                            {{ success }}
+                        </div>
+                    {% endif %}
+
+                    {% if error %}
+                        <div class="message error">
+                            {{ error }}
+                        </div>
+                    {% endif %}
+
+                    <form action="{% url "convert_file" %}" method="POST" novalidate enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <label for="file">Dosya Seç :</label>
+                        <input type="file" id="file" name="file" required>
+                        <button class="btn btn-primary" type="submit">Dönüştür</button>
+                    </form>
+            </div>
+        </div>
+      </div>
+{% endblock  %}
+
+{% block js_files %}
+    <script src="{% static 'books/js/script.js'%}"></script>
+{% endblock  %}
+
