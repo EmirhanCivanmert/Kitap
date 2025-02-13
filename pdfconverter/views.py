@@ -6,26 +6,26 @@ from .forms import UploadForm
 from docx import Document
 from PIL import Image
 from reportlab.pdfgen import canvas
+from reportlab.lib.pagesizes import letter
 
-def file_to_pdf(input_path, output_path):
-    if input_path.endswith(".docx"):
-        document = Document(input_path)
-        pdf_canvas = canvas.Canvas(output_path)
+def file_to_pdf(input_paths, output_path):
 
-        for paragraph in document.paragraphs:
-            pdf_canvas.drawString(100, 800, paragraph.text)
+    pdf_canvas = canvas.Canvas(output_path)
+    
+    for input_path in input_paths:
+        if input_path.endswith(".docx"):
+            document = Document(input_path)
+
+            for paragraph in document.paragraphs:
+                pdf_canvas.drawString(100, 800, paragraph.text)
+                pdf_canvas.showPage()
+
+        elif input_path.endswith((".jpg", ".png")):
+            pdf_canvas.drawImage(input_path, 0, 0)
             pdf_canvas.showPage()
 
-        pdf_canvas.save()
+    pdf_canvas.save()
 
-    elif input_path.endswith((".jpg", ".png")):
-        image = Image.open(input_path)
-        pdf_bytes = BytesIO()
-        image.convert("RGB").save(pdf_bytes, format="PDF")
-        pdf_bytes.seek(0)
-
-        with open(output_path, "wb") as f:
-            f.write(pdf_bytes.read())
 
 def convert_file(request):
     if request.method == "POST":
