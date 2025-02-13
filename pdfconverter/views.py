@@ -44,13 +44,19 @@ def convert_file(request):
 
                 input_paths.append(input_path)
 
-            output_path = os.path.join(output_dir, "merged_output.pdf")
+            if len(input_paths) == 1:
+                original_name = os.path.splitext(os.path.basename(input_paths[0]))[0]
+                output_filename = f"{original_name}.pdf"
+            else:
+                output_filename = "birlesikdosya.pdf"
+
+            output_path = os.path.join(output_dir, output_filename)
 
             try:
                 file_to_pdf(input_paths, output_path)
-                success_message = f"Dönüştürme Başarılı: {output_path}"
+                success_message = f"Dönüştürme Başarılı: {output_filename}"
             except Exception as e:
-                success_message = f"Dönüştürmede Hata Oluştu: {str(e)}"
+                success_message = f"Dönüştürme Hatalı: {str(e)}"
 
             return render(request, "pdfconverter/convert.html", {
                 'form': form,
@@ -60,4 +66,3 @@ def convert_file(request):
         form = UploadForm()
 
     return render(request, "pdfconverter/convert.html", {"form": form})
-
