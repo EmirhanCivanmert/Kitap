@@ -43,12 +43,10 @@ def convert_file(request):
                     input_path = os.path.join(settings.MEDIA_ROOT, uploaded_file.name)
                     output_path = os.path.join(output_dir, f"{os.path.splitext(uploaded_file.name)[0]}.pdf")
 
-                    # Dosyayı geçici olarak kaydet
                     with open(input_path, 'wb') as f:
                         for chunk in uploaded_file.chunks():
                             f.write(chunk)
 
-                    # PDF'e dönüştürme işlemi
                     file_to_pdf(input_path, output_path)
                     
                     success_messages.append(f"{uploaded_file.name} başarıyla dönüştürüldü.")
