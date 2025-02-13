@@ -6,7 +6,6 @@ from .forms import UploadForm
 from docx import Document
 from PIL import Image
 from reportlab.pdfgen import canvas
-from reportlab.lib.pagesizes import letter
 
 def file_to_pdf(input_paths, output_path):
 
