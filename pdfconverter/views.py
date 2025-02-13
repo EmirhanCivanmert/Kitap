@@ -34,31 +34,30 @@ def convert_file(request):
             output_dir = os.path.join(settings.MEDIA_ROOT, "converted")
             os.makedirs(output_dir, exist_ok=True)
 
-            success_messages = []
-            error_messages = []
-
+            input_paths = []
             for uploaded_file in files:
-                try:
-                    input_path = os.path.join(settings.MEDIA_ROOT, uploaded_file.name)
-                    output_path = os.path.join(output_dir, f"{os.path.splitext(uploaded_file.name)[0]}.pdf")
+                input_path = os.path.join(settings.MEDIA_ROOT, uploaded_file.name)
 
-                    with open(input_path, 'wb') as f:
-                        for chunk in uploaded_file.chunks():
-                            f.write(chunk)
+                with open(input_path, 'wb') as f:
+                    for chunk in uploaded_file.chunks():
+                        f.write(chunk)
 
-                    file_to_pdf(input_path, output_path)
-                    
-                    success_messages.append(f"{uploaded_file.name} başarıyla dönüştürüldü.")
+                input_paths.append(input_path)
 
-                except Exception as e:
-                    error_messages.append(f"{uploaded_file.name} dönüştürülemedi: {str(e)}")
+            output_path = os.path.join(output_dir, "merged_output.pdf")
+
+            try:
+                file_to_pdf(input_paths, output_path)
+                success_message = f"Dönüştürme Başarılı: {output_path}"
+            except Exception as e:
+                success_message = f"Dönüştürmede Hata Oluştu: {str(e)}"
 
             return render(request, "pdfconverter/convert.html", {
                 'form': form,
-                'success_messages': success_messages,
-                'error_messages': error_messages
+                'success': success_message
             })
     else:
         form = UploadForm()
 
     return render(request, "pdfconverter/convert.html", {"form": form})
+
