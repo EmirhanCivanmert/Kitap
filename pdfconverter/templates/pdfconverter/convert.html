@@ -38,10 +38,10 @@
 
                     {% if success_messages %}
                         <div style="color: green;">
-                            <h3>Başarıyla Dönüştürülen Dosyalar:</h3>
+                            <h3>Dönüştürülen Dosyalar :</h3>
                             <ul>
                                 {% for message in success_messages %}
-                                    <li>{{ message }}</li>
+                                    {{ message }}
                                 {% endfor %}
                             </ul>
                         </div>
