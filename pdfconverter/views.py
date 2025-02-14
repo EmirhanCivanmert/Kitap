@@ -7,6 +7,7 @@ from docx import Document
 from PIL import Image
 from reportlab.pdfgen import canvas
 from pptx import Presentation
+import pandas as pd
 
 def file_to_pdf(input_paths, output_path):
 
@@ -32,6 +33,14 @@ def file_to_pdf(input_paths, output_path):
                     if hasattr(shape, "text"):
                         pdf_canvas.drawString(100, 800, shape.text)
                         pdf_canvas.showPage()
+
+        elif input_path.endswith((".xls", ".xlsx")):
+            exc = pd.read_excel(input_path)
+            pdf_canvas = canvas.Canvas(output_path)
+
+            for row in exc.itertuples(index=False):
+                pdf_canvas.drawString(50, 800, " | ".join(map(str, row)))
+                pdf_canvas.showPage()
 
     pdf_canvas.save()
 
