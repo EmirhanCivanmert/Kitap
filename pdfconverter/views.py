@@ -6,6 +6,7 @@ from .forms import UploadForm
 from docx import Document
 from PIL import Image
 from reportlab.pdfgen import canvas
+from pptx import Presentation
 
 def file_to_pdf(input_paths, output_path):
 
@@ -22,6 +23,15 @@ def file_to_pdf(input_paths, output_path):
         elif input_path.endswith((".jpg", ".png")):
             pdf_canvas.drawImage(input_path, 0, 0)
             pdf_canvas.showPage()
+
+        elif input_path.endswith(".pptx"):
+            sunum = Presentation(input_path)
+
+            for slide in sunum.slides:
+                for shape in slide.shapes:
+                    if hasattr(shape, "text"):
+                        pdf_canvas.drawString(100, 800, shape.text)
+                        pdf_canvas.showPage()
 
     pdf_canvas.save()
 
