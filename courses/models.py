@@ -20,6 +20,8 @@ class Kitap(models.Model):
     categories = models.ManyToManyField(Category, related_name="books")
     summary = models.CharField(max_length=10000)
 
+    hikaye_kitap = models.ManyToManyField("self", blank=True)
+
     def __str__(self):
         return f"{self.title}"
     
