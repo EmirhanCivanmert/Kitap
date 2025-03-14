@@ -34,10 +34,11 @@
                     </div>
                     <div class="offcanvas-body">
                       <div>
-                        {% if book.summary != "" %} {{ book.summary }} 
-                        {% else %} Bu kitabın özeti anlık olarak bulunmamaktadır.
+                        {% if book.summary %}
+                            {{ book.summary }}
+                        {% else %}
+                            Bu kitabın özeti anlık olarak bulunmamaktadır.
                         {% endif %}
-                        
                       </div>
                     </div>
                 </div>
