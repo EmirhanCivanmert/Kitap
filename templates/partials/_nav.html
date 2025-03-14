@@ -19,6 +19,8 @@
                     <li class="nav-item">
                         <a href="{% url "book_list" %}" class="nav-link">Kitap Güncelle</a>
                     </li>
+                {% endif %}
+                {% if user.is_authenticated %}
                     <li class="nav-item">
                         <a href="{% url "convert_file" %}" class="nav-link">Dosya Dönüştür</a>
                     </li>
